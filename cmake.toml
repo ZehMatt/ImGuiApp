@@ -1,0 +1,33 @@
+# Reference: https://build-cpp.github.io/cmkr/cmake-toml
+[project]
+name = "ImGuiApp"
+
+[find-package.OpenGL]
+required = true
+
+[subdir.thirdparty]
+
+[target.ImGuiApp]
+type = "static"
+alias = "ImGuiApp::ImGuiApp"
+sources = ["src/**.cpp"]
+headers = ["src/**.hpp", "include/ImGuiApp/**.hpp"]
+private-include-directories = ["src"]
+include-directories = ["include"]
+compile-features = ["cxx_std_17"]
+private-link-libraries = [
+    "SDL2::SDL2",
+    "OpenGL::GL",
+    "rapidxml::rapidxml",
+]
+link-libraries = [
+    "imgui",
+]
+
+[target.ImGuiApp_Demo]
+type = "executable"
+sources = ["demo/main.cpp"]
+compile-features = ["cxx_std_17"]
+link-libraries = [
+    "ImGuiApp::ImGuiApp",
+]
